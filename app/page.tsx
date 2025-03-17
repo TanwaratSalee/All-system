@@ -47,11 +47,12 @@ export default function Home() {
         }
       `}</style>
 
+      {/* Background */}
       <div className="flex flex-col min-h-screen bg-cover bg-center bg-opacity-60 relative" style={{ backgroundImage: "url('/img/backgroung.png')" }}>
 
-        {/* navbar */}
-        <div className="navbar bg-base-100 shadow-sm fixed top-0 left-0 w-full z-50">
-          <div className="navbar-start">
+        {/* Navbar */}
+        <div className="navbar bg-base-100 shadow-sm fixed top-0 left-0 w-full z-50 flex justify-between items-center px-4 md:px-10">
+          <div className="hidden md:flex items-center">
             <div className="relative">
               <input type="checkbox" id="menu-toggle" className="peer hidden" />
               <label htmlFor="menu-toggle" className="btn btn-ghost btn-circle">
@@ -69,17 +70,17 @@ export default function Home() {
               </div>
             </div>
           </div>
-          <div className="navbar-center">
-            <a className="text-xl font-kanit">Transport Data Center</a>
-          </div>
-          <div className="navbar-end">
-            <span className="text-normal font-normal pr-3 font-kanit">{currentTime}</span>
-          </div>
+          <div className="text-xl font-kanit">Transport Data Center</div>
+          <div className="hidden md:flex text-normal font-normal pr-3 font-kanit">{currentTime}</div>
         </div>
 
-        {/* information */}
+        {/* Information */}
         <div className="flex-grow mt-16 p-2 relative font-kanit">
+
+          {/* grid/2 between system & ptt*/}
           <div className="grid md:grid-cols-5 md:mx-10">
+
+            {/* System */}
             <div className="sm:col-span-4 content-center">
               <div className="grid grid-cols-2 sm:grid-cols-3 sm:gap-2 md:mr-6 2xl:grid-cols-4">
                 {cardData.map((item, index) => (
@@ -97,27 +98,30 @@ export default function Home() {
                 ))}
               </div>
             </div>
-            <div className="col-span-1 place-items-center h-full  ">
+
+            {/* PTT */}
+            <div className="col-span-1 place-items-center h-full">
               <div className="bg-white rounded-lg pr-4 p-2 mt-4">
                 <iframe title="IframeTH oil_price_board" src="https://www.pttor.com/th/oil_price_board?lang=th" width="200" height="480" className="rounded-lg text-center"></iframe>
               </div>
             </div>
-          </div>
 
           </div>
-          <footer className="bg-gray-200 text-center p-4 shadow-md w-full mt-auto relative">
-            <div className="container mx-auto flex justify-between items-center">
-              <div className="text-gray-500">
-                <strong>
-                  Copyright &copy; 2014-2021 <a href="https://adminlte.io" className="text-blue-600 hover:underline">AdminLTE.io</a>
-                </strong>
-                . All rights reserved.
-              </div>
-              <div className="text-gray-500">Anything you want</div>
-            </div>
-          </footer>
         </div>
 
+        {/* Footer */}
+        <footer className="bg-gray-200 text-center p-4 shadow-md w-full mt-auto relative">
+          <div className="container mx-auto flex justify-between items-center">
+            <div className="text-gray-500">
+              <strong>
+                Power by improvement transportation team
+              </strong>
+            </div>
+            <div className="text-gray-50 text-gray-200">Anything you want</div>
+          </div>
+        </footer>
+        
+      </div>
     </>
   );
 }
