@@ -12,20 +12,36 @@ type CardData = {
 export default function Home() {
   // Explicitly type the cardData array
   const cardData: CardData[] = [
-    { src: "/img/KeyAccount.png", title: "KeyAccount", link: "https://lite.cpall.co.th/Logistic/keyaccount/login.php" },
-    { src: "/img/FleetBusiness.png", title: "Daily Fleet Management", link: "https://lite.cpall.co.th/Logistic/vendor_portal/login.php" },
-    { src: "/img/Master-data.png", title: "MASTER DATA", link: "http://10.184.9.26:8080/NEW_RPA/login.phphttp://10.184.9.26:8080/NEW_RPA/login.php" },
+    { src: "/img/keyAccount.png", title: "KeyAccount", link: "https://lite.cpall.co.th/Logistic/keyaccount/login.php" },
+    { src: "/img/fleetBusiness.png", title: "Daily Fleet Management", link: "https://lite.cpall.co.th/Logistic/vendor_portal/login.php" },
+    { src: "/img/master-data.png", title: "MASTER DATA", link: "http://10.184.9.26:8080/NEW_RPA/login.phphttp://10.184.9.26:8080/NEW_RPA/login.php" },
     { src: "/img/goCRM.png", title: "goCRM", link: "http://gocrmcss.gosoft.co.th/crm/signInAD.jsp" },
     { src: "/img/gps.png", title: "GPS Tracking", link: "" },
     { src: "/img/send-it.png", title: "sendit", link: "https://manage.sendit.asia/th/2stage/login" },
-    { src: "/img/MMMOP.png", title: "MMMOP", link: "https://mms.cpall.co.th/masters/servlet/masters" },
-    { src: "/img/WTS.png", title: "Warehouse Terminal System", link: "" },
+    { src: "/img/mmmop.png", title: "MMMOP", link: "https://mms.cpall.co.th/masters/servlet/masters" },
+    { src: "/img/wts.png", title: "Warehouse Terminal System", link: "" },
     { src: "/img/transport.png", title: "Transportation", link: "http://172.29.113.15/Logistic/transportation/apps/pages/login.php" }
   ];
 
+  const cardGps: CardData[] = [
+    { src: "/img/dtc-logo.png", title: "DTC", link: "https://gp.com" },
+    { src: "/img/teletec-logo.png", title: "Tele Tec", link: "https://www.tel.com/" },
+  ];
+
+  const cardWts: CardData[] = [
+    { src: "/img/warehouse.png", title: "CDC BKK", link: "https://wts-bdc.cpall.co.th/wts/Login.jsp" },
+    { src: "/img/warehouse.png", title: "CDC UPC", link: "https://wts-bdc.cpall.co.th/wts/Login.jsp" },
+    { src: "/img/warehouse.png", title: "FDC", link: "https://wts-bdc.cpall.co.th/wts/Login.jsp" },
+    { src: "/img/warehouse.png", title: "DC RDC ADC", link: "https://wts-bdc.cpall.co.th/wts/Login.jsp" },
+    { src: "/img/warehouse.png", title: "BDC", link: "https://wts-bdc.cpall.co.th/wts/Login.jsp" },
+    { src: "/img/warehouse.png", title: "TOTE CONTROL", link: "https://wts-bdc.cpall.co.th/wts/Login.jsp" },
+    { src: "/img/warehouse.png", title: "AIE", link: "https://wts-bdc.cpall.co.th/wts/Login.jsp" },
+  ];
+
   const [currentTime, setCurrentTime] = useState("");
-  const [showPopup, setShowPopup] = useState(false);
+  const [showGpsPopup, setshowGpsPopup] = useState(false);
   const [selectedGpsLink, setSelectedGpsLink] = useState("");
+  const [showWarehousePopup, setShowWarehousePopup] = useState(false);
 
   useEffect(() => {
     const updateClock = () => {
@@ -47,19 +63,23 @@ export default function Home() {
     const interval = setInterval(updateClock, 1000);
     return () => clearInterval(interval);
   }, []);
-  
 
-  const handleGpsClick = () => {
-    setShowPopup(true);
+  const handleGpsClick = (item: CardData) => {
+    if (item.title === "Warehouse Terminal System") {
+      setShowWarehousePopup(true);
+    } else {
+      setshowGpsPopup(true);
+    }
   };
 
   const handleClosePopup = () => {
-    setShowPopup(false);
+    setshowGpsPopup(false);
+    setShowWarehousePopup(false);
   };
 
   const handleLinkSelection = (link: string) => {
     setSelectedGpsLink(link);
-    setShowPopup(false);
+    setshowGpsPopup(false);
     //window.location.href = link; // same window
     window.open(link, "_blank"); // new window
   };
@@ -75,7 +95,7 @@ export default function Home() {
 
       {/* Background */}
       <div className="flex flex-col min-h-screen bg-cover bg-center relative"
-      style={{ backgroundImage: "url('/img/backgroung.png')" }}>
+        style={{ backgroundImage: "url('/img/backgroung.png')" }}>
 
         {/* Navbar */}
         <div className="navbar bg-base-100 shadow-sm fixed top-0 left-0 w-full z-50 flex justify-between items-center px-4 md:px-10">
@@ -112,7 +132,7 @@ export default function Home() {
               <div className="grid grid-cols-2 sm:grid-cols-3 sm:gap-2 md:mr-6 2xl:grid-cols-4">
                 {cardData.map((item, index) => (
                   <a key={index} href={item.link || "#"} target={item.link ? "_blank" : ""} rel="noopener noreferrer">
-                    <div className="bg-white relative group overflow-hidden rounded-lg shadow-md flex flex-col items-center m-2" onClick={item.title === "GPS Tracking" ? handleGpsClick : undefined}>
+                    <div className="bg-white relative group overflow-hidden rounded-lg shadow-md flex flex-col items-center m-2" onClick={() => handleGpsClick(item)}>
                       <img src={item.src} alt={item.title} className="h-30 w-72 object-cover transition-transform duration-300 group-hover:scale-110" />
                       <div className="bg-gray-200 w-full text-center py-1 font-semibold text-gray-700 text-sm md:text-base py-2">
                         {item.title}
@@ -136,32 +156,80 @@ export default function Home() {
           </div>
         </div>
 
-        {/* GPS Tracking Popup */}
-        {showPopup && (
+        {/* GPS Tracking  */}
+        {showGpsPopup && (
           <div className="fixed top-0 left-0 w-full h-full bg-black/50 flex items-center justify-center z-50">
-          <div className="bg-white p-6 rounded-lg shadow-lg w-80">
-            <div className="flex flex-row justify-between">
-              <h3 className="text-lg font-medium mb-4">Select GPS Tracking Service</h3>
-              <button onClick={handleClosePopup} className=" btn btn-sm btn-circle">
-                ✖
-              </button>
-            </div>
-            <div className="flex flex-row justify-between">
-              {/* DTC Option with Image */}
-              <div className="basis-auto mb-4 text-center bg-white shadow-md rounded-b-lg">
-                <img src="/img/dtc-logo.png" alt="DTC Logo" className="w-32 h-28 mx-auto mb-2 object-cover" />
-                <a href="https://gp.com" className="block w-full text-center p-2 bg-gray-200 text-black rounded-b-lg ">DTC</a>
+            <div className="bg-white p-6 rounded-lg shadow-lg w-82 sm:w-120">
+              <div className="flex flex-row justify-between">
+                <h3 className="text-lg font-medium mb-4">Select GPS Tracking Service</h3>
+                <button onClick={handleClosePopup} className=" btn btn-sm btn-circle">✖</button>
               </div>
-        
-              {/* Tele Tec Option with Image */}
-              <div className="basis-auto mb-4 text-center bg-white shadow-md rounded-b-lg">
-                <img src="/img/teletec-logo.png" alt="Tele Tec Logo" className="w-32 h-28 mx-auto mb-2 object-cover" />
-                <a href="https://www.tel.com/" className="block w-full text-center p-2 bg-gray-200 text-black rounded-b-lg">Tele Tec</a>
+
+              <div className="grid grid-cols-2 gap-4">
+                {cardGps.map((item, index) => (
+                  <a key={index} href={item.link || "#"} target={item.link ? "_blank" : ""} rel="noopener noreferrer">
+                    <div
+                      className="bg-white relative group overflow-hidden rounded-lg shadow-md flex flex-col items-center m-2"
+                      onClick={() => handleGpsClick(item)}
+                    >
+                      <img
+                        src={item.src}
+                        alt={item.title}
+                        className="h-30 w-62 object-cover transition-transform duration-300 group-hover:scale-110"
+                      />
+                      <div className="bg-gray-200 w-full text-center py-1 font-semibold text-gray-700 text-sm md:text-base py-2">
+                        {item.title}
+                      </div>
+                      <div className="absolute inset-0 bg-black/85 text-white text-center font-medium px-3 text-lg flex items-center justify-center transition-transform duration-300 transform translate-y-full group-hover:translate-y-0">
+                        {item.title}
+                      </div>
+                    </div>
+                  </a>
+                ))}
               </div>
+
+
             </div>
           </div>
-        </div>
-        
+
+        )}
+
+        {/*wts */}
+        {showWarehousePopup && (
+          <div className="fixed top-0 left-0 w-full h-full bg-black/50 flex items-center justify-center z-50">
+            <div className="bg-white p-4 sm:p-6 rounded-lg shadow-lg w-85 sm:w-140 md:w-180 lg:w-220 ">
+              <div className="flex flex-row justify-between">
+                <h3 className="text-lg font-medium mb-2 sm:mb-4">Select Warehouse Terminal System</h3>
+                <button onClick={handleClosePopup} className=" btn btn-sm btn-circle">✖</button>
+              </div>
+
+              <div className="grid grid-cols-3 gap-2 md:grid-cols-4 ">
+                {cardWts.map((item, index) => (
+                  <a key={index} href={item.link || "#"} target={item.link ? "_blank" : ""} rel="noopener noreferrer">
+                    <div
+                      className="bg-white relative group overflow-hidden rounded-lg shadow-md flex flex-col items-center md:m-2"
+                      onClick={() => handleGpsClick(item)}
+                    >
+                      <img
+                        src={item.src}
+                        alt={item.title}
+                        className="h-30 w-62 sm:w-75 object-cover transition-transform duration-300 group-hover:scale-110"
+                      />
+                      <div className="bg-gray-200 w-full text-center py-1 font-semibold text-gray-700 text-sm md:text-base py-2">
+                        {item.title}
+                      </div>
+                      <div className="absolute inset-0 bg-black/85 text-white text-center font-medium px-3 text-lg flex items-center justify-center transition-transform duration-300 transform translate-y-full group-hover:translate-y-0">
+                        {item.title}
+                      </div>
+                    </div>
+                  </a>
+                ))}
+              </div>
+
+
+            </div>
+          </div>
+
         )}
 
         {/* Footer */}
