@@ -14,32 +14,33 @@ export default function Home() {
   const cardData: CardData[] = [
     { src: "/img/keyAccount.png", title: "KeyAccount", link: "https://lite.cpall.co.th/Logistic/keyaccount/login.php" },
     { src: "/img/fleetBusiness.png", title: "Daily Fleet Management", link: "https://lite.cpall.co.th/Logistic/vendor_portal/login.php" },
-    { src: "/img/master-data.png", title: "MASTER DATA", link: "http://10.184.9.26:8080/NEW_RPA/login.phphttp://10.184.9.26:8080/NEW_RPA/login.php" },
+    { src: "/img/master-data.png", title: "MASTER DATA", link: "http://10.184.9.26:8080/NEW_RPA/login.php" },
     { src: "/img/goCRM.png", title: "goCRM", link: "http://gocrmcss.gosoft.co.th/crm/signInAD.jsp" },
     { src: "/img/gps.png", title: "GPS Tracking", link: "" },
     { src: "/img/send-it.png", title: "sendit", link: "https://manage.sendit.asia/th/2stage/login" },
     { src: "/img/mmmop.png", title: "MMMOP", link: "https://mms.cpall.co.th/masters/servlet/masters" },
     { src: "/img/wts.png", title: "Warehouse Terminal System", link: "" },
-    { src: "/img/transport.png", title: "Transportation", link: "http://172.29.113.15/Logistic/transportation/apps/pages/login.php" }
+    { src: "/img/transport.png", title: "Transportation", link: "http://172.29.113.15/Logistic/transportation/apps/pages/login.php" },
+    { src: "/img/comingsoon.png", title: "Cross-Dock", link: "" }
   ];
 
   const cardGps: CardData[] = [
-    { src: "/img/dtc-logo.png", title: "DTC", link: "https://gp.com" },
-    { src: "/img/teletec-logo.png", title: "Tele Tec", link: "https://www.tel.com/" },
+    { src: "/img/dtc.jpg", title: "DTC", link: "https://gp.com" },
+    { src: "/img/teletec.png", title: "Tele Tec", link: "https://www.tel.com/" },
   ];
 
   const cardWts: CardData[] = [
-    { src: "/img/warehouse.png", title: "CDC BKK", link: "https://wts-bdc.cpall.co.th/wts/Login.jsp" },
-    { src: "/img/warehouse.png", title: "CDC UPC", link: "https://wts-bdc.cpall.co.th/wts/Login.jsp" },
-    { src: "/img/warehouse.png", title: "FDC", link: "https://wts-bdc.cpall.co.th/wts/Login.jsp" },
-    { src: "/img/warehouse.png", title: "DC RDC ADC", link: "https://wts-bdc.cpall.co.th/wts/Login.jsp" },
+    { src: "/img/warehouse.png", title: "CDC BKK", link: "https://wts-cdc.cpall.co.th/wts/Login.jsp" },
+    { src: "/img/warehouse.png", title: "CDC UPC", link: "https://wts-rcdc.cpall.co.th/wts/Login.jsp" },
+    { src: "/img/warehouse.png", title: "FDC", link: "https://wts-fdc.cpall.co.th/wts/Login.jsp" },
+    { src: "/img/warehouse.png", title: "DC RDC ADC", link: "https://wts-pdc.cpall.co.th/wtstp/Login.jsp" },
     { src: "/img/warehouse.png", title: "BDC", link: "https://wts-bdc.cpall.co.th/wts/Login.jsp" },
-    { src: "/img/warehouse.png", title: "TOTE CONTROL", link: "https://wts-bdc.cpall.co.th/wts/Login.jsp" },
-    { src: "/img/warehouse.png", title: "AIE", link: "https://wts-bdc.cpall.co.th/wts/Login.jsp" },
+    { src: "/img/warehouse.png", title: "TOTE CONTROL", link: "https://wts-mh.cpall.co.th/mh/Login.jsp" },
+    { src: "/img/warehouse.png", title: "AIE", link: "https://wts-acdc.cpall.co.th/wts/Login.jsp" },
   ];
 
   const [currentTime, setCurrentTime] = useState("");
-  const [showGpsPopup, setshowGpsPopup] = useState(false);
+  const [showGpsPopup, setShowGps] = useState(false);
   const [selectedGpsLink, setSelectedGpsLink] = useState("");
   const [showWarehousePopup, setShowWarehousePopup] = useState(false);
 
@@ -64,22 +65,25 @@ export default function Home() {
     return () => clearInterval(interval);
   }, []);
 
-  const handleGpsClick = (item: CardData) => {
+  const handleClickPopup = (item: CardData) => {
     if (item.title === "Warehouse Terminal System") {
       setShowWarehousePopup(true);
-    } else {
-      setshowGpsPopup(true);
+    } if (item.title === "GPS Tracking") {
+      setShowGps(true);
+    }
+    else {
+      console.log("No matching popup");
     }
   };
 
   const handleClosePopup = () => {
-    setshowGpsPopup(false);
+    setShowGps(false);
     setShowWarehousePopup(false);
   };
 
   const handleLinkSelection = (link: string) => {
     setSelectedGpsLink(link);
-    setshowGpsPopup(false);
+    setShowGps(false);
     //window.location.href = link; // same window
     window.open(link, "_blank"); // new window
   };
@@ -129,10 +133,10 @@ export default function Home() {
 
             {/* System */}
             <div className="sm:col-span-4 content-center">
-              <div className="grid grid-cols-2 sm:grid-cols-3 sm:gap-2 md:mr-6 2xl:grid-cols-4">
+              <div className="grid grid-cols-3 sm:grid-cols-3 sm:gap-2 md:mr-6 lg:grid-cols-4">
                 {cardData.map((item, index) => (
                   <a key={index} href={item.link || "#"} target={item.link ? "_blank" : ""} rel="noopener noreferrer">
-                    <div className="bg-white relative group overflow-hidden rounded-lg shadow-md flex flex-col items-center m-2" onClick={() => handleGpsClick(item)}>
+                    <div className="bg-white relative group overflow-hidden rounded-lg shadow-md flex flex-col items-center m-2" onClick={() => handleClickPopup(item)}>
                       <img src={item.src} alt={item.title} className="h-30 w-72 object-cover transition-transform duration-300 group-hover:scale-110" />
                       <div className="bg-gray-200 w-full text-center py-1 font-semibold text-gray-700 text-sm md:text-base py-2">
                         {item.title}
@@ -170,8 +174,7 @@ export default function Home() {
                   <a key={index} href={item.link || "#"} target={item.link ? "_blank" : ""} rel="noopener noreferrer">
                     <div
                       className="bg-white relative group overflow-hidden rounded-lg shadow-md flex flex-col items-center m-2"
-                      onClick={() => handleGpsClick(item)}
-                    >
+                      onClick={() => handleClickPopup(item)}>
                       <img
                         src={item.src}
                         alt={item.title}
@@ -187,8 +190,6 @@ export default function Home() {
                   </a>
                 ))}
               </div>
-
-
             </div>
           </div>
 
@@ -208,7 +209,7 @@ export default function Home() {
                   <a key={index} href={item.link || "#"} target={item.link ? "_blank" : ""} rel="noopener noreferrer">
                     <div
                       className="bg-white relative group overflow-hidden rounded-lg shadow-md flex flex-col items-center md:m-2"
-                      onClick={() => handleGpsClick(item)}
+                      onClick={() => handleClickPopup(item)}
                     >
                       <img
                         src={item.src}
@@ -233,14 +234,15 @@ export default function Home() {
         )}
 
         {/* Footer */}
-        <footer className="bg-gray-200 text-center p-4 shadow-md w-full mt-auto relative">
+        <footer className="bg-gray-200 text-center p-4 shadow-md w-full mt-auto absolute bottom-0 left-0">
           <div className="container mx-auto flex justify-between items-center">
             <div className="text-gray-500 font-medium">
-              Power by improvement transportation team
+              Powered by Improvement Transportation Team
             </div>
-            <div className="text-gray-50 text-gray-200">Anything you want</div>
+            <div className="text-gray-500">Anything you want</div>
           </div>
         </footer>
+
 
       </div>
     </>
