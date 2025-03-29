@@ -102,7 +102,7 @@ export default function Home() {
         style={{ backgroundImage: "url('/img/backgroung.png')" }}>
 
         {/* Navbar */}
-        <div className="navbar bg-base-100 shadow-sm fixed top-0 left-0 w-full z-50 flex justify-between items-center px-4 md:px-10">
+        <div className="navbar bg-base-100 shadow-sm fixed top-0 left-0 w-full z-50 flex justify-between items-center px-4 md:px-10 lg:px-15 xl:px-30">
           {/* <div className="hidden md:flex items-center">
             <div className="relative">
               <input type="checkbox" id="menu-toggle" className="peer hidden" />
@@ -126,7 +126,7 @@ export default function Home() {
         </div>
 
         {/* Information */}
-        <div className="flex-grow mt-16 p-2 relative font-kanit">
+        <div className="flex-grow mt-16 p-2 relative font-kanit xl:px-30">
 
           {/* grid/2 between system & ptt*/}
           <div className="grid md:grid-cols-5 md:mx-10">
@@ -227,22 +227,20 @@ export default function Home() {
                 ))}
               </div>
 
-
             </div>
           </div>
 
         )}
 
         {/* Footer */}
-        <footer className="bg-gray-200 text-center p-4 shadow-md w-full mt-auto absolute bottom-0 left-0">
-          <div className="container mx-auto flex justify-between items-center">
+        <footer className="bg-gray-200 p-4 shadow-md w-full mt-auto absolute bottom-0 left-0">
+          <div className="container ml-15 ">
             <div className="text-gray-500 font-medium">
               Powered by Improvement Transportation Team
             </div>
-            <div className="text-gray-500">Anything you want</div>
+            {/* <div className="text-gray-500">Anything you want</div> */}
           </div>
         </footer>
-
 
       </div>
     </>
